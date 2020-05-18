@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Data Covid-Pwr</string>
+    <string name="label_lihatdata">Lihat Data Covid-19</string>
+    <string name="title_home">Rekap Data Covid-19\nKabupaten Purworejo</string>
 </resources>
