@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -155,6 +156,8 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun addData(){
+        progressBarAdd.visibility = View.VISIBLE
+
         val date = editText_tanggal.text.toString()
         val odp = editText_odp.text.toString()
         val pdp = editText_pdp.text.toString()
@@ -172,15 +175,18 @@ class AddActivity : AppCompatActivity() {
             .set(dataCovid)
             .addOnSuccessListener {
                 Toast.makeText(this,"Data Tersimpan",Toast.LENGTH_SHORT).show()
-
+                progressBarAdd.visibility = View.GONE
                 finish()
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Gagal Tersimpan",Toast.LENGTH_SHORT).show()
+                progressBarAdd.visibility = View.GONE
             }
     }
 
     private fun updateData() {
+        progressBarAdd.visibility = View.VISIBLE
+
         val date = editText_tanggal.text.toString()
         val odp = editText_odp.text.toString()
         val pdp = editText_pdp.text.toString()
@@ -198,11 +204,12 @@ class AddActivity : AppCompatActivity() {
             .set(dataCovid)
             .addOnSuccessListener {
                 Toast.makeText(this,"Data Terupdate",Toast.LENGTH_SHORT).show()
-
+                progressBarAdd.visibility = View.GONE
                 finish()
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Gagal Terupdate",Toast.LENGTH_SHORT).show()
+                progressBarAdd.visibility = View.GONE
             }
     }
 
@@ -248,15 +255,19 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun deleteData(id : String){
+        progressBarAdd.visibility = View.VISIBLE
+
         db.collection("datacovid")
             .document(id)
             .delete()
             .addOnSuccessListener {
                 Toast.makeText(this,"Data Terhapus",Toast.LENGTH_SHORT).show()
+                progressBarAdd.visibility = View.GONE
                 finish()
             }
             .addOnFailureListener {
                 Toast.makeText(this,"Gagal Terhapus",Toast.LENGTH_SHORT).show()
+                progressBarAdd.visibility = View.GONE
             }
     }
 }
