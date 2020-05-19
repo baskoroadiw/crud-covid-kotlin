@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_lihat_data.*
 
 class LihatDataActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class LihatDataActivity : AppCompatActivity() {
     private lateinit var mAdapter: FirestoreRecyclerAdapter<Covid, AdapterLihatData.ViewHolder>
     private val mFirestore = FirebaseFirestore.getInstance()
     private val mCovidCollection = mFirestore.collection("datacovid")
+    private val mQUery = mCovidCollection.orderBy("date",Query.Direction.DESCENDING)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,7 @@ class LihatDataActivity : AppCompatActivity() {
 
     private fun setupAdapter(){
         val options = FirestoreRecyclerOptions.Builder<Covid>()
-            .setQuery(mCovidCollection, Covid::class.java)
+            .setQuery(mQUery, Covid::class.java)
             .build()
 
         mAdapter = AdapterLihatData(this,options)
