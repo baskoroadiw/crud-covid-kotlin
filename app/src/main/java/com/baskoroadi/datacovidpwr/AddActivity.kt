@@ -1,9 +1,12 @@
 package com.baskoroadi.datacovidpwr
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.RestrictionEntry.TYPE_NULL
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -206,5 +209,54 @@ class AddActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.add_menu,menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        super.onPrepareOptionsMenu(menu)
+
+        if (intent.extras == null){
+            val menuItem = menu?.findItem(R.id.menu_delete)
+            menuItem?.setVisible(false)
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_delete -> showDialogDel(id)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showDialogDel(strId: String) {
+        //dialog pop delete
+        val builder = AlertDialog.Builder(this, R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+            .setTitle("Hapus Data")
+            .setMessage("Yakin mau hapus data ini?")
+            .setPositiveButton("Ya") { dialog, which ->
+                deleteData(strId)
+            }
+            .setNegativeButton("Tidak", null)
+        builder.create().show()
+    }
+
+    private fun deleteData(id : String){
+        db.collection("datacovid")
+            .document(id)
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(this,"Data Terhapus",Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,"Gagal Terhapus",Toast.LENGTH_SHORT).show()
+            }
     }
 }
