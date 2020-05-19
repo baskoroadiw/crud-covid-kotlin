@@ -1,5 +1,6 @@
 package com.baskoroadi.datacovidpwr
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,10 @@ class LihatDataActivity : AppCompatActivity() {
         supportActionBar?.title = resources.getString(R.string.label_lihatdata)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        fab_add.setOnClickListener {
+            startActivity(Intent(this,AddActivity::class.java))
+        }
 
         rv_lihatdata.apply {
             setHasFixedSize(true)
