@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "44681827899",
+    "firebase_url": "https://datacovid-19.firebaseio.com",
+    "project_id": "datacovid-19",
+    "storage_bucket": "datacovid-19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44681827899:android:6ad06c1b0905773c71ae1e",
+        "android_client_info": {
+          "package_name": "com.baskoroadi.datacovidpwr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "44681827899-eam3nnqt7rbu8nie52u9hge9nt2ma3fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0v6zVT-vT7eLlun5_yuWHUpgqwv95gT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "44681827899-eam3nnqt7rbu8nie52u9hge9nt2ma3fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
