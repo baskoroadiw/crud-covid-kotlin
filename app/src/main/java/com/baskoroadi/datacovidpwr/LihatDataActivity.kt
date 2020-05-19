@@ -55,7 +55,7 @@ class LihatDataActivity : AppCompatActivity() {
             .setQuery(mCovidCollection, Covid::class.java)
             .build()
 
-        mAdapter = AdapterLihatData(options)
+        mAdapter = AdapterLihatData(this,options)
         mAdapter.notifyDataSetChanged()
         rv_lihatdata.adapter = mAdapter
     }

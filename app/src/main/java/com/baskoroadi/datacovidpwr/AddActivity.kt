@@ -3,8 +3,11 @@ package com.baskoroadi.datacovidpwr
 import android.app.DatePickerDialog
 import android.content.RestrictionEntry.TYPE_NULL
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,6 +16,9 @@ import java.util.*
 class AddActivity : AppCompatActivity() {
 
     lateinit var cal : Calendar
+    lateinit var db : FirebaseFirestore
+    lateinit var covid : Covid
+    lateinit var id : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,11 +27,47 @@ class AddActivity : AppCompatActivity() {
         //init calendar
         cal = Calendar.getInstance()
 
+        //init Firestore
+        db = FirebaseFirestore.getInstance()
+
+        if (intent.extras == null){
+            initViewAdd()
+        }
+        else{
+            initViewEdit()
+        }
+
+        initDatePicker()
+
+        buttonAdd.setOnClickListener {
+            if (intent.extras == null){
+                addData()
+            }
+            else{
+                updateData()
+            }
+        }
+    }
+
+    private fun initViewAdd(){
         supportActionBar?.title = resources.getString(R.string.label_tambahdata)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
-        initDatePicker()
+    private fun initViewEdit(){
+        supportActionBar?.title = resources.getString(R.string.label_updatedata)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        txt_add.setText(resources.getString(R.string.label_updatedata))
+
+        covid = intent.getParcelableExtra("parcelCovid")
+        id = intent.getStringExtra("id")
+
+        editText_tanggal.setText(covid.date)
+        editText_odp.setText(covid.odp)
+        editText_pdp.setText(covid.pdp)
+        editText_positif.setText(covid.positif)
     }
 
     private fun initDatePicker(){
@@ -107,6 +149,58 @@ class AddActivity : AppCompatActivity() {
 
         val fixDate = tanggal+" "+fixBulan+" "+tahun
         editText_tanggal.setText(fixDate)
+    }
+
+    private fun addData(){
+        val date = editText_tanggal.text.toString()
+        val odp = editText_odp.text.toString()
+        val pdp = editText_pdp.text.toString()
+        val positif = editText_positif.text.toString()
+
+        val dataCovid = hashMapOf(
+            "date" to date,
+            "odp" to odp,
+            "pdp" to pdp,
+            "positif" to positif
+        )
+
+        db.collection("datacovid")
+            .document()
+            .set(dataCovid)
+            .addOnSuccessListener {
+                Toast.makeText(this,"Data Tersimpan",Toast.LENGTH_SHORT).show()
+
+                finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,"Gagal Tersimpan",Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateData() {
+        val date = editText_tanggal.text.toString()
+        val odp = editText_odp.text.toString()
+        val pdp = editText_pdp.text.toString()
+        val positif = editText_positif.text.toString()
+
+        val dataCovid = hashMapOf(
+            "date" to date,
+            "odp" to odp,
+            "pdp" to pdp,
+            "positif" to positif
+        )
+
+        db.collection("datacovid")
+            .document(id)
+            .set(dataCovid)
+            .addOnSuccessListener {
+                Toast.makeText(this,"Data Terupdate",Toast.LENGTH_SHORT).show()
+
+                finish()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,"Gagal Terupdate",Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onSupportNavigateUp(): Boolean {

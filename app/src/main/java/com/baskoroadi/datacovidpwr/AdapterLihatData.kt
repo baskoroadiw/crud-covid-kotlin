@@ -1,15 +1,18 @@
 package com.baskoroadi.datacovidpwr
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class AdapterLihatData (options: FirestoreRecyclerOptions<Covid>) : FirestoreRecyclerAdapter<Covid, AdapterLihatData.ViewHolder>(options) {
+class AdapterLihatData (private val context : Context, options: FirestoreRecyclerOptions<Covid>) : FirestoreRecyclerAdapter<Covid, AdapterLihatData.ViewHolder>(options) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -18,8 +21,16 @@ class AdapterLihatData (options: FirestoreRecyclerOptions<Covid>) : FirestoreRec
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, positon: Int, item:Covid) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, item:Covid) {
         holder.bindItem(item)
+        holder.view.setOnClickListener {
+            val id = getSnapshots().getSnapshot(position).getId()
+            val intent = Intent(context,AddActivity::class.java).apply {
+                putExtra("parcelCovid",item)
+                putExtra("id",id)
+            }
+            context.startActivity(intent)
+        }
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view){

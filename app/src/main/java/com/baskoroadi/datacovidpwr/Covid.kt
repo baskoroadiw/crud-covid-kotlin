@@ -5,8 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Covid(
-    var odp: String? = null,
-    var pdp: String? = null,
-    var positif: String? = null,
-    var date: String? = null
+    var odp: String? = "",
+    var pdp: String? = "",
+    var positif: String? = "",
+    var date: String? = ""
 ) : Parcelable
