@@ -50,37 +50,6 @@ class InfoCovidActivity : AppCompatActivity() {
             })
     }
 
-//    private fun getDataCovid(){
-//        // Instantiate the RequestQueue.
-//        val queue = Volley.newRequestQueue(this)
-//        val url = "https://covid19.mathdro.id/api/countries/id"
-//
-//        // Request a string response from the provided URL.
-//        val stringRequest = StringRequest(
-//            Request.Method.GET, url,
-//            Response.Listener { response ->
-//                var rootApi = JSONObject(response)
-//
-//                for (i in 0..0){
-//                    var jmlPositif = rootApi.getJSONObject("confirmed").getString("value")
-//                    var jmlSembuh = rootApi.getJSONObject("recovered").getString("value")
-//                    var jmlMeninggal = rootApi.getJSONObject("deaths").getString("value")
-//
-//                    tvPositif.setText(jmlPositif)
-//                    tvSembuh.setText(jmlSembuh)
-//                    tvMeninggal.setText(jmlMeninggal)
-//
-//                    endProgress()
-//                }
-//            },
-//            Response.ErrorListener {
-//                Log.d("responvolley","gagal")
-//            })
-//
-//        // Add the request to the RequestQueue.
-//        queue.add(stringRequest)
-//    }
-
     private fun beginProgress(){
         pbPositif.visibility = View.VISIBLE
         pbSembuh.visibility = View.VISIBLE
