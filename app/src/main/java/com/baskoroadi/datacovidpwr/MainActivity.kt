@@ -14,5 +14,9 @@ class MainActivity : AppCompatActivity() {
         button_lihatdata.setOnClickListener {
             startActivity(Intent(this,LihatDataActivity::class.java))
         }
+
+        button_infocovid.setOnClickListener {
+            startActivity(Intent(this,InfoCovidActivity::class.java))
+        }
     }
 }
