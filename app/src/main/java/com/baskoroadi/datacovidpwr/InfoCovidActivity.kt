@@ -19,7 +19,10 @@ class InfoCovidActivity : AppCompatActivity() {
         setContentView(R.layout.activity_info_covid)
 
         beginProgress()
+        getDataCovidIndo()
+    }
 
+    private fun getDataCovidIndo(){
         val constraint = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
 
         val workGetDataCovid = OneTimeWorkRequestBuilder<DataApiWorker>()
@@ -34,7 +37,7 @@ class InfoCovidActivity : AppCompatActivity() {
 
                     val responseJson = info.outputData.getString("responseJson")
 
-                    var rootApi = JSONObject(responseJson)
+                    val rootApi = JSONObject(responseJson)
 
                     for (i in 0..0){
                         val jmlPositif = rootApi.getJSONObject("confirmed").getString("value")
@@ -48,7 +51,7 @@ class InfoCovidActivity : AppCompatActivity() {
                         tvMeninggal.setText(formatter.format(jmlMeninggal.toDouble()))
 
                         endProgress()
-                     }
+                    }
                 }
             })
     }
