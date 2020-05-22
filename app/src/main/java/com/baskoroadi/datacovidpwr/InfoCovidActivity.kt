@@ -10,6 +10,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_info_covid.*
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 class InfoCovidActivity : AppCompatActivity() {
 
@@ -40,9 +41,11 @@ class InfoCovidActivity : AppCompatActivity() {
                         val jmlSembuh = rootApi.getJSONObject("recovered").getString("value")
                         val jmlMeninggal = rootApi.getJSONObject("deaths").getString("value")
 
-                        tvPositif.setText(jmlPositif)
-                        tvSembuh.setText(jmlSembuh)
-                        tvMeninggal.setText(jmlMeninggal)
+                        val formatter = DecimalFormat("#,###")
+
+                        tvPositif.setText(formatter.format(jmlPositif.toDouble()))
+                        tvSembuh.setText(formatter.format(jmlSembuh.toDouble()))
+                        tvMeninggal.setText(formatter.format(jmlMeninggal.toDouble()))
 
                         endProgress()
                      }
