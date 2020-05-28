@@ -1,6 +1,7 @@
 package com.baskoroadi.datacovidpwr
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -11,6 +12,7 @@ import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_info_covid.*
 import org.json.JSONObject
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 
 class InfoCovidActivity : AppCompatActivity() {
 
@@ -43,12 +45,18 @@ class InfoCovidActivity : AppCompatActivity() {
                         val jmlPositif = rootApi.getJSONObject("confirmed").getString("value")
                         val jmlSembuh = rootApi.getJSONObject("recovered").getString("value")
                         val jmlMeninggal = rootApi.getJSONObject("deaths").getString("value")
+                        val lastUpdate = rootApi.getString("lastUpdate")
 
                         val formatter = DecimalFormat("#,###")
+
+                        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                        val formatterTime = SimpleDateFormat("dd MMMM yyyy KK:mm")
+                        val output: String = formatterTime.format(parser.parse(lastUpdate))
 
                         tvPositif.setText(formatter.format(jmlPositif.toDouble()))
                         tvSembuh.setText(formatter.format(jmlSembuh.toDouble()))
                         tvMeninggal.setText(formatter.format(jmlMeninggal.toDouble()))
+                        tvLastUpdate.setText("Update Terakhir : ${output}")
 
                         endProgress()
                     }
@@ -66,6 +74,7 @@ class InfoCovidActivity : AppCompatActivity() {
         tvTitlePositif.visibility = View.GONE
         tvTitleSembuh.visibility = View.GONE
         tvTitleMeninggal.visibility = View.GONE
+        tvLastUpdate.visibility = View.GONE
     }
 
     private fun endProgress(){
@@ -78,5 +87,6 @@ class InfoCovidActivity : AppCompatActivity() {
         tvTitlePositif.visibility = View.VISIBLE
         tvTitleSembuh.visibility = View.VISIBLE
         tvTitleMeninggal.visibility = View.VISIBLE
+        tvLastUpdate.visibility = View.VISIBLE
     }
 }
